@@ -1,0 +1,12 @@
+{
+  "fault": {
+    "faultstring": "Spike arrest limit exceeded. Rate limit is 120pm.",
+    "detail": {
+      "errorcode": "policies.ratelimit.SpikeArrestViolation",
+      "status": 429,
+      "message": "Too many requests. Please smooth traffic or reduce burst rate.",
+      "timestamp": "2026-09-28T07:35:00.000Z",
+      "retryAfterSeconds": 1
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "BusinessPartnerCategory": "2",
+  "OrganizationBPName1": "Global Freight Solutions AG",
+  "SearchTerm1": "FREIGHT",
+  "BusinessPartnerGrouping": "BP02",
+  "to_BusinessPartnerAddress": {
+    "results": [
+      {
+        "Country": "DE",
+        "CityName": "Hamburg",
+        "PostalCode": "20457",
+        "StreetName": "Am Sandtorkai",
+        "HouseNumber": "48"
+      }
+    ]
+  }
+}

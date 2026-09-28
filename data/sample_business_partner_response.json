@@ -1,0 +1,14 @@
+{
+  "d": {
+    "BusinessPartner": "0000100492",
+    "Customer": "0000100492",
+    "Supplier": "",
+    "BusinessPartnerCategory": "2",
+    "OrganizationBPName1": "Global Freight Solutions AG",
+    "SearchTerm1": "FREIGHT",
+    "CreationDate": "2026-09-28",
+    "CreatedByUser": "TECH_LEAD_IS",
+    "LastChangeDate": "2026-09-28",
+    "IsActiveEntity": true
+  }
+}

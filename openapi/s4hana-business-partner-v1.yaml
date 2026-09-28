@@ -9,10 +9,10 @@ info:
     name: Adarsh (Tech Lead - SAP Integration)
     email: adarshbabumk1@gmail.com
 servers:
-  - url: https://api-gateway.enterprise.corp/v1/s4
-    description: Production SAP API Management Gateway
-  - url: https://api-gateway-dev.enterprise.corp/v1/s4
-    description: Development SAP API Management Gateway
+  - url: https://<apim-host>/v1/s4
+    description: Production SAP API Management Gateway Proxy
+  - url: https://<apim-dev-host>/v1/s4
+    description: Development SAP API Management Gateway Proxy
 
 paths:
   /business-partners:
@@ -98,7 +98,7 @@ components:
       description: SAP BTP XSUAA / IAS OAuth 2.0 Client Credentials flow
       flows:
         clientCredentials:
-          tokenUrl: https://tenant.authentication.eu10.hana.ondemand.com/oauth/token
+          tokenUrl: https://<btp-subaccount>.authentication.<region>.hana.ondemand.com/oauth/token
           scopes:
             s4.businesspartner.read: Read access to Business Partner records
             s4.businesspartner.write: Write and update access to Business Partner records
