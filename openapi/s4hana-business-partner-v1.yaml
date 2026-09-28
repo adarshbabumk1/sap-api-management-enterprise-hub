@@ -6,7 +6,7 @@ info:
     Managed via SAP API Management with rate-limiting, OAuth 2.0 authorization, and caching.
   version: 1.0.0
   contact:
-    name: Adarsh (SAP Integration Architect)
+    name: Adarsh (Tech Lead - SAP Integration)
     email: adarshbabumk1@gmail.com
 servers:
   - url: https://api-gateway.enterprise.corp/v1/s4
