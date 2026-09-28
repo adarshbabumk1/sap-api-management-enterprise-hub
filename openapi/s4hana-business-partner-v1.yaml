@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: SAP S/4HANA Business Partner Governed API
+  description: |
+    Enterprise Governed API Proxy for SAP S/4HANA Cloud and On-Premise Business Partner records.
+    Managed via SAP API Management with rate-limiting, OAuth 2.0 authorization, and caching.
+  version: 1.0.0
+  contact:
+    name: Adarsh (SAP Integration Architect)
+    email: adarshbabumk1@gmail.com
+servers:
+  - url: https://api-gateway.enterprise.corp/v1/s4
+    description: Production SAP API Management Gateway
+  - url: https://api-gateway-dev.enterprise.corp/v1/s4
+    description: Development SAP API Management Gateway
+
+paths:
+  /business-partners:
+    get:
+      summary: Retrieve Business Partners
+      description: Returns a paginated list of active business partners from SAP S/4HANA.
+      operationId: getBusinessPartners
+      security:
+        - OAuth2Bearer:
+            - s4.businesspartner.read
+        - ApiKeyAuth: []
+      parameters:
+        - name: $top
+          in: query
+          description: Number of records to return
+          schema:
+            type: integer
+            default: 50
+            maximum: 1000
+        - name: $skip
+          in: query
+          description: Number of records to skip for pagination
+          schema:
+            type: integer
+            default: 0
+        - name: category
+          in: query
+          description: Partner Category (1=Person, 2=Organization, 3=Group)
+          schema:
+            type: string
+            enum: ["1", "2", "3"]
+      responses:
+        '200':
+          description: Successful query response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 2
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BusinessPartner'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Create Business Partner
+      description: Creates a new business partner record in SAP S/4HANA via Cloud Integration.
+      operationId: createBusinessPartner
+      security:
+        - OAuth2Bearer:
+            - s4.businesspartner.write
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessPartnerCreateRequest'
+      responses:
+        '201':
+          description: Successfully created business partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessPartner'
+        '400':
+          description: Invalid payload or validation failure
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    OAuth2Bearer:
+      type: oauth2
+      description: SAP BTP XSUAA / IAS OAuth 2.0 Client Credentials flow
+      flows:
+        clientCredentials:
+          tokenUrl: https://tenant.authentication.eu10.hana.ondemand.com/oauth/token
+          scopes:
+            s4.businesspartner.read: Read access to Business Partner records
+            s4.businesspartner.write: Write and update access to Business Partner records
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: apikey
+
+  schemas:
+    BusinessPartner:
+      type: object
+      properties:
+        businessPartnerId:
+          type: string
+          example: "0000100042"
+        category:
+          type: string
+          example: "2"
+        organizationName:
+          type: string
+          example: "Acme Logistics GmbH"
+        searchTerm:
+          type: string
+          example: "ACME"
+        country:
+          type: string
+          example: "DE"
+        city:
+          type: string
+          example: "Walldorf"
+        status:
+          type: string
+          enum: ["ACTIVE", "BLOCKED", "DELETED"]
+          example: "ACTIVE"
+
+    BusinessPartnerCreateRequest:
+      type: object
+      required:
+        - category
+        - organizationName
+        - country
+      properties:
+        category:
+          type: string
+          example: "2"
+        organizationName:
+          type: string
+          example: "Global Supply Partners LLC"
+        searchTerm:
+          type: string
+          example: "GLOBAL"
+        country:
+          type: string
+          example: "US"
+        city:
+          type: string
+          example: "New York"
+
+  responses:
+    Unauthorized:
+      description: Authentication failed or invalid token.
+      content:
+        application/json:
+          example:
+            code: "UNAUTHORIZED_401"
+            message: "Invalid or expired OAuth 2.0 access token."
+    TooManyRequests:
+      description: Rate limit exceeded (SpikeArrest or Quota violation).
+      content:
+        application/json:
+          example:
+            code: "RATE_LIMIT_EXCEEDED_429"
+            message: "Quota limit exceeded. Please upgrade your API subscription."
+    InternalServerError:
+      description: Internal backend error.
+      content:
+        application/json:
+          example:
+            code: "BACKEND_ERROR_500"
+            message: "Unable to reach SAP S/4HANA backend instance."

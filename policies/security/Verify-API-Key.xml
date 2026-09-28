@@ -1,0 +1,9 @@
+<!--
+    SAP API Management Policy: Verify API Key
+    Type: Security
+    Validates API Key from header or query param against Developer Portal registrations.
+-->
+<VerifyAPIKey async="false" continueOnError="false" enabled="true" xmlns="http://www.sap.com/apimgmt">
+    <!-- Look for APIKey in header 'apikey' or fallback to query parameter 'apikey' -->
+    <APIKey ref="request.header.apikey"/>
+</VerifyAPIKey>

@@ -1,0 +1,13 @@
+<!--
+    SAP API Management Policy: Spike Arrest
+    Type: Traffic Management
+    Protects SAP backend endpoints against sudden traffic spikes and DoS bursts.
+-->
+<SpikeArrest async="false" continueOnError="false" enabled="true" xmlns="http://www.sap.com/apimgmt">
+    <!-- Smoothing algorithm rate limit: 120 requests per minute or 2 per second -->
+    <Rate>120pm</Rate>
+    <!-- Use client IP or authenticated developer app ID as identifier -->
+    <Identifier ref="request.header.X-Forwarded-For"/>
+    <!-- Use true to smooth bursts over the 60-second window evenly -->
+    <UseEffectiveParamNames>true</UseEffectiveParamNames>
+</SpikeArrest>

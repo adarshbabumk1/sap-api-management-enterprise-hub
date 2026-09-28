@@ -1,0 +1,19 @@
+<!--
+    SAP API Management Policy: Quota
+    Type: Traffic Management & Monetization
+    Enforces business tier limits per developer application.
+-->
+<Quota async="false" continueOnError="false" enabled="true" type="rollingwindow" xmlns="http://www.sap.com/apimgmt">
+    <!-- Default allowed call limit if not overridden by Developer App attribute -->
+    <Allow count="10000" countRef="verifyapikey.Verify-API-Key.developer.quota_limit"/>
+    <!-- Interval size -->
+    <Interval ref="verifyapikey.Verify-API-Key.developer.quota_interval">1</Interval>
+    <!-- Time unit: minute, hour, day, or month -->
+    <TimeUnit ref="verifyapikey.Verify-API-Key.developer.quota_timeunit">month</TimeUnit>
+    <!-- Identifier for quota bucket (App ID) -->
+    <Identifier ref="verifyapikey.Verify-API-Key.client_id"/>
+    <!-- Distributed counter across all gateway nodes -->
+    <Distributed>true</Distributed>
+    <!-- Synchronous counter update to prevent race conditions -->
+    <Synchronous>true</Synchronous>
+</Quota>

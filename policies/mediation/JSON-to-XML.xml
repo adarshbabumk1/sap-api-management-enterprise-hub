@@ -1,0 +1,16 @@
+<!--
+    SAP API Management Policy: JSON to XML Transformation
+    Type: Mediation
+    Transforms incoming REST JSON payloads into XML structures for SOAP/BAPI legacy targets.
+-->
+<JSONToXML async="false" continueOnError="false" enabled="true" xmlns="http://www.sap.com/apimgmt">
+    <Options>
+        <RootElementName>Root</RootElementName>
+        <ArrayRootElementName>Array</ArrayRootElementName>
+        <ArrayItemElementName>Item</ArrayItemElementName>
+        <NullValue>NULL</NullValue>
+        <OmitRootElement>false</OmitRootElement>
+    </Options>
+    <OutputVariable>request.content</OutputVariable>
+    <Source>request.content</Source>
+</JSONToXML>

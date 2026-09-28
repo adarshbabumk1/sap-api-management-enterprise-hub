@@ -1,0 +1,11 @@
+<!--
+    SAP API Management Policy: Decode / Extract JWT Claims
+    Type: Mediation & Identity
+    Decodes incoming JWT claims (email, tenant_id, user_id) without verification signature latency.
+-->
+<DecodeJWT async="false" continueOnError="false" enabled="true" xmlns="http://www.sap.com/apimgmt">
+    <!-- Source token reference -->
+    <Source>request.header.authorization</Source>
+    <!-- Output claims prefix -->
+    <OutputVariable>jwtClaims</OutputVariable>
+</DecodeJWT>

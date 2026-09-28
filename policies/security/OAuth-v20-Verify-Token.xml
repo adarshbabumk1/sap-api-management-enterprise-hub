@@ -1,0 +1,14 @@
+<!--
+    SAP API Management Policy: OAuth v2.0 Verify Access Token
+    Type: Security
+    Validates Bearer token authenticity and checks required OAuth scopes.
+-->
+<OAuthV2 async="false" continueOnError="false" enabled="true" xmlns="http://www.sap.com/apimgmt">
+    <!-- Operation to perform: VerifyAccessToken -->
+    <Operation>VerifyAccessToken</Operation>
+    <!-- Extract token from Authorization: Bearer <token> -->
+    <AccessToken>request.header.authorization</AccessToken>
+    <AccessTokenPrefix>Bearer</AccessTokenPrefix>
+    <!-- Enforce required scope for this endpoint -->
+    <Scope>s4.businesspartner.read</Scope>
+</OAuthV2>
