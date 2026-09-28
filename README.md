@@ -7,7 +7,7 @@
 
 An architectural reference repository providing production-ready **Policy Bundles**, **OpenAPI 3.0 specifications**, and **API Governance patterns** for **SAP API Management** on **SAP BTP Integration Suite**.
 
-This project demonstrates how to protect, decouple, monitor, and monetize SAP backend systems (S/4HANA, ECC, CPI, SuccessFactors) using enterprise gateway policies.
+This project demonstrates how to protect, decouple, monitor, and monetize SAP backend systems (S/4HANA, ECC, Cloud Integration, SAP Ariba) using enterprise gateway policies.
 
 ---
 
